@@ -13,6 +13,7 @@ func main() {
 	}
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("received request from: ", r.RemoteAddr)
 		w.Write(([]byte)("Hello from server: " + name))
 	})
 
