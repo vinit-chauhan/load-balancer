@@ -1,0 +1,38 @@
+services:
+  backend1:
+    image: golang:1.22
+    volumes:
+      - ./server/:/app
+    environment:
+      - SERVER_NAME=backend1
+    hostname: backend1.local
+    command: ["go", "run", "/app/main.go"]
+  
+  backend2:
+    image: golang:1.22
+    volumes:
+      - ./server/:/app
+    environment:
+      - SERVER_NAME=backend2
+    hostname: backend2.local
+    command: ["go", "run", "/app/main.go"]
+
+  backend3:
+    image: golang:1.22
+    volumes:
+      - ./server/:/app
+    environment:
+      - SERVER_NAME=backend3
+    hostname: backend3.local
+    command: ["go", "run", "/app/main.go"]
+
+  reverse-proxy:
+    image: golang:1.22
+    volumes:
+      - ./src/:/app
+    hostname: reverse-proxy.local
+    ports:
+      - "80:80"
+    command: ["go", "run", "/app/main.go"]
+    depends_on:
+      - backend1
