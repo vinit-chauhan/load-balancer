@@ -1,13 +1,37 @@
+# to start dummy web servers
 services:
-  backend1:
+  backend1-1:
     image: golang:1.22
     volumes:
       - ./server/:/app
     environment:
       - SERVER_NAME=backend1
     hostname: backend1.local
+    ports:
+      - 8000:80
     command: ["go", "run", "/app/main.go"]
-  
+
+  backend1-2:
+    image: golang:1.22
+    volumes:
+      - ./server/:/app
+    environment:
+      - SERVER_NAME=backend1
+    hostname: backend1.local
+    ports:
+      - 8010:80
+    command: ["go", "run", "/app/main.go"]
+  backend1-3:
+    image: golang:1.22
+    volumes:
+      - ./server/:/app
+    environment:
+      - SERVER_NAME=backend1
+    hostname: backend1.local
+    ports:
+      - 8020:80
+    command: ["go", "run", "/app/main.go"]
+
   backend2:
     image: golang:1.22
     volumes:
@@ -15,24 +39,59 @@ services:
     environment:
       - SERVER_NAME=backend2
     hostname: backend2.local
+    ports:
+      - 8001:80
+    command: ["go", "run", "/app/main.go"]
+  backend2-1:
+    image: golang:1.22
+    volumes:
+      - ./server/:/app
+    environment:
+      - SERVER_NAME=backend2
+    hostname: backend2.local
+    ports:
+      - 8011:80
+    command: ["go", "run", "/app/main.go"]
+  backend2-2:
+    image: golang:1.22
+    volumes:
+      - ./server/:/app
+    environment:
+      - SERVER_NAME=backend2
+    hostname: backend2.local
+    ports:
+      - 8021:80
     command: ["go", "run", "/app/main.go"]
 
-  backend3:
+  backend3-1:
     image: golang:1.22
     volumes:
       - ./server/:/app
     environment:
       - SERVER_NAME=backend3
     hostname: backend3.local
+    ports:
+      - 8002:80
     command: ["go", "run", "/app/main.go"]
-
-  reverse-proxy:
+  
+  backend3-2:
     image: golang:1.22
     volumes:
-      - ./src/:/app
-    hostname: reverse-proxy.local
+      - ./server/:/app
+    environment:
+      - SERVER_NAME=backend3
+    hostname: backend3.local
     ports:
-      - "80:80"
+      - 8012:80
     command: ["go", "run", "/app/main.go"]
-    depends_on:
-      - backend1
+
+  # reverse-proxy:
+  #   image: golang:1.22
+  #   volumes:
+  #     - ./src/:/app
+  #   hostname: reverse-proxy.local
+  #   ports:
+  #     - "80:80"
+  #   command: ["go", "run", "/app/main.go"]
+  #   depends_on:
+  #     - backend1
