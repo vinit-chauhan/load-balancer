@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
+	"os"
 
 	"github.com/vinit-chauhan/reverse-proxy/config"
 	"github.com/vinit-chauhan/reverse-proxy/internal"
@@ -12,6 +12,7 @@ import (
 
 func init() {
 	logger.Init()
+	logger.SetLogLevel(logger.LevelDebug)
 	logger.Debug("init", "logger initialized")
 
 	logger.Debug("init", "start loading config")
@@ -22,21 +23,22 @@ func init() {
 func main() {
 	conf := config.GetConfig()
 
-	fmt.Println("[debug] setting up load balancer")
+	logger.Debug("main", "setting up load balancer")
 	loadBalancer := internal.NewLoadBalancer(&conf)
-	fmt.Println("[debug] load balancer initiated")
+	logger.Debug("main", "load balancer initiated")
 
-	fmt.Println("[debug] setting up multiple routes")
+	logger.Debug("main", "setting up multiple routes")
 	handler := http.NewServeMux()
 
 	for _, service := range conf.Services {
 		path := service.UrlPath
 		if path == "" {
-			log.Fatalf("Service URL path cannot be empty")
+			logger.Panic("main", "Service URL path cannot be empty")
+			os.Exit(1)
 		}
 
 		handler.Handle(path, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			fmt.Println("Load balancing incoming requests")
+			logger.Debug("main", "Load balancing incoming requests")
 			proxy := loadBalancer.GetServices(path).GetNextBackend()
 			proxy.ServeHTTP(w, r)
 		}))
@@ -47,8 +49,8 @@ func main() {
 		Handler: handler,
 	}
 
-	log.Println("Starting reverse proxy with multiple backends on https://0.0.0.0:8080...")
+	logger.Info("main", "Starting reverse proxy with multiple backends on https://0.0.0.0:8080...")
 	if err := server.ListenAndServe(); err != nil {
-		log.Fatalf("Server failed: %v", err)
+		logger.Panic("main", fmt.Sprintf("Server failed: %v", err))
 	}
 }

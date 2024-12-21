@@ -5,7 +5,7 @@ services:
     volumes:
       - ./test-service/:/app
     environment:
-      - SERVER_NAME=backend1
+      - SERVER_NAME=service-1/backend-1
     hostname: backend1.local
     ports:
       - 8000:80
@@ -16,7 +16,7 @@ services:
     volumes:
       - ./test-service/:/app
     environment:
-      - SERVER_NAME=backend1
+      - SERVER_NAME=service-1/backend-2
     hostname: backend1.local
     ports:
       - 8010:80
@@ -26,7 +26,7 @@ services:
     volumes:
       - ./test-service/:/app
     environment:
-      - SERVER_NAME=backend1
+      - SERVER_NAME=service-1/backend-3
     hostname: backend1.local
     ports:
       - 8020:80
@@ -37,7 +37,7 @@ services:
     volumes:
       - ./test-service/:/app
     environment:
-      - SERVER_NAME=backend2
+      - SERVER_NAME=service-2/backend-1
     hostname: backend2.local
     ports:
       - 8001:80
@@ -47,7 +47,7 @@ services:
     volumes:
       - ./test-service/:/app
     environment:
-      - SERVER_NAME=backend2
+      - SERVER_NAME=service-2/backend-2
     hostname: backend2.local
     ports:
       - 8011:80
@@ -57,7 +57,7 @@ services:
     volumes:
       - ./test-service/:/app
     environment:
-      - SERVER_NAME=backend2
+      - SERVER_NAME=service-2/backend-3
     hostname: backend2.local
     ports:
       - 8021:80
@@ -68,7 +68,7 @@ services:
     volumes:
       - ./test-service/:/app
     environment:
-      - SERVER_NAME=backend3
+      - SERVER_NAME=service-3/backend-1
     hostname: backend3.local
     ports:
       - 8002:80
@@ -79,7 +79,7 @@ services:
     volumes:
       - ./test-service/:/app
     environment:
-      - SERVER_NAME=backend3
+      - SERVER_NAME=service-3/backend-2
     hostname: backend3.local
     ports:
       - 8012:80

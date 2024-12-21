@@ -35,7 +35,7 @@ func Init() {
 		}
 	}
 
-	fd, err := os.OpenFile(logDir+"/"+logFileName, os.O_CREATE|os.O_APPEND, 0755)
+	fd, err := os.OpenFile(logDir+"/"+logFileName, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
 	if err != nil {
 		panic(fmt.Sprintf("Error creating log file (%s): %s", logDir+"/"+logFileName, err.Error()))
 	}

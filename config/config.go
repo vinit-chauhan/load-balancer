@@ -20,7 +20,7 @@ type ConfigType struct {
 type ServiceType struct {
 	Name     string   `yaml:"name"`
 	Backends []string `yaml:"urls"`
-	UrlPath  string   `yaml:"url_path"`
+	UrlPath  string   `yaml:"endpoint"`
 }
 
 func Load() {

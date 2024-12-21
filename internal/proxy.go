@@ -1,7 +1,6 @@
 package internal
 
 import (
-	"fmt"
 	"net/http/httputil"
 	"net/url"
 
@@ -16,7 +15,7 @@ type LoadBalancer struct {
 }
 
 func NewLoadBalancer(conf *config.ConfigType) *LoadBalancer {
-	fmt.Println("[debug] in the function NewLoadBalancer")
+	logger.Debug("NewLoadBalancer", "creating new load balancer instance from config")
 
 	services := make(map[Path]Service)
 
@@ -32,7 +31,7 @@ func NewLoadBalancer(conf *config.ConfigType) *LoadBalancer {
 				ReverseProxy: httputil.NewSingleHostReverseProxy(url),
 			}
 		}
-		services[Path(service.UrlPath)] = Service{backends: backends}
+		services[Path(service.UrlPath)] = Service{backends: backends, counter: new(uint64)}
 	}
 
 	return &LoadBalancer{Services: services}
