@@ -3,7 +3,7 @@ services:
   backend1-1:
     image: golang:1.22
     volumes:
-      - ./server/:/app
+      - ./test-service/:/app
     environment:
       - SERVER_NAME=backend1
     hostname: backend1.local
@@ -14,7 +14,7 @@ services:
   backend1-2:
     image: golang:1.22
     volumes:
-      - ./server/:/app
+      - ./test-service/:/app
     environment:
       - SERVER_NAME=backend1
     hostname: backend1.local
@@ -24,7 +24,7 @@ services:
   backend1-3:
     image: golang:1.22
     volumes:
-      - ./server/:/app
+      - ./test-service/:/app
     environment:
       - SERVER_NAME=backend1
     hostname: backend1.local
@@ -35,7 +35,7 @@ services:
   backend2:
     image: golang:1.22
     volumes:
-      - ./server/:/app
+      - ./test-service/:/app
     environment:
       - SERVER_NAME=backend2
     hostname: backend2.local
@@ -45,7 +45,7 @@ services:
   backend2-1:
     image: golang:1.22
     volumes:
-      - ./server/:/app
+      - ./test-service/:/app
     environment:
       - SERVER_NAME=backend2
     hostname: backend2.local
@@ -55,7 +55,7 @@ services:
   backend2-2:
     image: golang:1.22
     volumes:
-      - ./server/:/app
+      - ./test-service/:/app
     environment:
       - SERVER_NAME=backend2
     hostname: backend2.local
@@ -66,7 +66,7 @@ services:
   backend3-1:
     image: golang:1.22
     volumes:
-      - ./server/:/app
+      - ./test-service/:/app
     environment:
       - SERVER_NAME=backend3
     hostname: backend3.local
@@ -77,7 +77,7 @@ services:
   backend3-2:
     image: golang:1.22
     volumes:
-      - ./server/:/app
+      - ./test-service/:/app
     environment:
       - SERVER_NAME=backend3
     hostname: backend3.local
