@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/vinit-chauhan/reverse-proxy/config"
-	"github.com/vinit-chauhan/reverse-proxy/internal"
-	"github.com/vinit-chauhan/reverse-proxy/logger"
+	"github.com/vinit-chauhan/load-balancer/config"
+	"github.com/vinit-chauhan/load-balancer/internal"
+	"github.com/vinit-chauhan/load-balancer/logger"
 )
 
 func init() {

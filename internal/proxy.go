@@ -4,8 +4,8 @@ import (
 	"net/http/httputil"
 	"net/url"
 
-	"github.com/vinit-chauhan/reverse-proxy/config"
-	"github.com/vinit-chauhan/reverse-proxy/logger"
+	"github.com/vinit-chauhan/load-balancer/config"
+	"github.com/vinit-chauhan/load-balancer/logger"
 )
 
 type Path string

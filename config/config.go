@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/vinit-chauhan/reverse-proxy/logger"
+	"github.com/vinit-chauhan/load-balancer/logger"
 	"gopkg.in/yaml.v3"
 )
 

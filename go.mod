@@ -1,4 +1,4 @@
-module github.com/vinit-chauhan/reverse-proxy
+module github.com/vinit-chauhan/load-balancer
 
 go 1.22.11
 

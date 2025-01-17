@@ -5,7 +5,7 @@ import (
 	"net/url"
 	"sync/atomic"
 
-	"github.com/vinit-chauhan/reverse-proxy/logger"
+	"github.com/vinit-chauhan/load-balancer/logger"
 )
 
 type Service struct {
