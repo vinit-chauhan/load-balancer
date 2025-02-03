@@ -7,7 +7,7 @@ A simple load balancer implementation in Go designed to distribute incoming HTTP
 
 ## Features
 
-- **Round Robin & Least Connections (TODO) ** algorithms
+- **Round Robin & Least Connections (TODO)** algorithms
 - Configurable server pools
 - Health checks for backend servers
 - Request logging
