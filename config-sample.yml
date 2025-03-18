@@ -1,0 +1,18 @@
+services:
+  - name: backend1
+    endpoint: "/backend1"
+    urls:
+      - http://backend1.1.local
+      - http://backend1.2.local
+      - http://backend1.3.local
+  - name: backend2
+    endpoint: "/backend2"
+    urls:
+      - http://backend2.1.local
+      - http://backend2.2.local
+      - http://backend2.3.local
+  - name: backend3
+    endpoint: "/backend3"
+    urls:
+      - http://backend3.1.local
+      - http://backend3.2.local
