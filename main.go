@@ -16,7 +16,13 @@ func init() {
 	logger.Debug("init", "logger initialized")
 
 	logger.Debug("init", "start loading config")
-	config.Load()
+
+	path := os.Getenv("CONFIG_PATH")
+	if path == "" {
+		logger.Debug("init", "CONFIG_PATH not set, using default config path")
+		path = "./config.yml"
+	}
+	config.Load(path)
 	logger.Info("init", "config loaded successfully")
 }
 
@@ -43,9 +49,12 @@ func main() {
 			proxy.ServeHTTP(w, r)
 		}))
 	}
-
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
 	server := &http.Server{
-		Addr:    "0.0.0.0:8080",
+		Addr:    "0.0.0.0:" + port,
 		Handler: handler,
 	}
 

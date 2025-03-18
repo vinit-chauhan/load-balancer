@@ -9,8 +9,7 @@ import (
 )
 
 var (
-	ConfigPath = "./config.yml"
-	config     = ConfigType{}
+	config = ConfigType{}
 )
 
 type ConfigType struct {
@@ -23,10 +22,10 @@ type ServiceType struct {
 	UrlPath  string   `yaml:"endpoint"`
 }
 
-func Load() {
-	buff, err := os.ReadFile(ConfigPath)
+func Load(path string) {
+	buff, err := os.ReadFile(path)
 	if err != nil {
-		logger.Panic("Load", fmt.Sprintf("Error loading config file from disk: %s: %s", ConfigPath, err.Error()))
+		logger.Panic("Load", fmt.Sprintf("Error loading config file from disk: %s: %s", path, err.Error()))
 	}
 
 	if err := yaml.Unmarshal(buff, &config); err != nil {

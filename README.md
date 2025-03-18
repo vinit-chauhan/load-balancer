@@ -7,7 +7,7 @@ A simple load balancer implementation in Go designed to distribute incoming HTTP
 
 ## Features
 
-- **Round Robin & Least Connections (TODO) ** algorithms
+- **Round Robin & Least Connections (TODO)** algorithms
 - Configurable server pools
 - Health checks for backend servers
 - Request logging
@@ -30,6 +30,7 @@ A simple load balancer implementation in Go designed to distribute incoming HTTP
 ## Configuration
 
 Modify `config.yaml`:
+
 ```yaml
 services:
   - name: web-app-1
@@ -38,6 +39,7 @@ services:
       - localhost:8900
       - localhost:8901
 ```
+
 - **urls**: List of backend servers
 - **endpoint**: endpoint to host the services
 - **name**: name for the service
@@ -45,11 +47,13 @@ services:
 ## Usage
 
 Start load balancer:
+
 ```bash
 ./load-balancer -config=config.yaml
 ```
 
 Send requests:
+
 ```bash
 curl http://localhost:8080
 ```
@@ -57,6 +61,7 @@ curl http://localhost:8080
 ## Logging
 
 Requests are logged to `logs/load_balancer_<timestamp>.log` with format:
+
 ```
 [YYYY-MM-DD HH:MM:SS] <client_ip> -> <backend_server>
 ```
@@ -72,6 +77,7 @@ Requests are logged to `logs/load_balancer_<timestamp>.log` with format:
 ## Contributing
 
 Contributions welcome! Please:
+
 1. Fork the repository
 2. Create a feature branch
 3. Submit a Pull Request
@@ -79,3 +85,4 @@ Contributions welcome! Please:
 ## License
 
 MIT License - see [LICENSE](LICENSE) file
+a
