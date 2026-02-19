@@ -1,95 +1,90 @@
 package logger
 
 import (
-	"fmt"
-	"log"
+	"context"
+	"log/slog"
 	"os"
-	"strings"
 )
 
-var logger *log.Logger
-var logLevel = LevelInfo
+var defaultLogger *slog.Logger
+var logLevel = new(slog.LevelVar)
 
 const (
-	LevelDebug = iota
-	LevelInfo
-	LevelWarn
-	LevelError
-	LevelPanic
+	LevelDebug = int(slog.LevelDebug)
+	LevelInfo  = int(slog.LevelInfo)
+	LevelWarn  = int(slog.LevelWarn)
+	LevelError = int(slog.LevelError)
 )
 
-const defaultDir = "logs"
-const logFileName = "proxy.log"
-
 func Init() {
-	var logDir string
-
-	if logDir = os.Getenv("LOG_DIR"); logDir == "" {
-		logDir = defaultDir
+	opts := &slog.HandlerOptions{
+		Level: logLevel,
 	}
-
-	// Create log dir.
-	if _, err := os.ReadDir(logDir); err != nil {
-		if err := os.Mkdir(logDir, 0755); err != nil {
-			panic(fmt.Sprintf("Error initializing log dir (%s): %s", logDir, err.Error()))
-		}
-	}
-
-	fd, err := os.OpenFile(logDir+"/"+logFileName, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
-	if err != nil {
-		panic(fmt.Sprintf("Error creating log file (%s): %s", logDir+"/"+logFileName, err.Error()))
-	}
-
-	logger = log.New(fd, "[proxy]", log.LstdFlags|log.LUTC)
+	// Use JSON handler for structured logging
+	handler := slog.NewJSONHandler(os.Stdout, opts)
+	defaultLogger = slog.New(handler)
+	slog.SetDefault(defaultLogger)
 }
 
 func SetLogLevel(level int) {
-	logLevel = level
+	logLevel.Set(slog.Level(level))
 }
 
-func addLog(level int, msg string) {
-	if level >= logLevel {
-		logger.Println(msg)
+
+func Debug(tag string, msg string, args ...any) {
+	if defaultLogger == nil {
+		Init()
 	}
+	defaultLogger.Debug(msg, append([]any{slog.String("tag", tag)}, args...)...)
 }
 
-func Debug(tag string, msg string, keys ...fmt.Stringer) {
-	typ := "Debug"
-
-	if len(keys) == 0 {
-		addLog(LevelDebug, fmt.Sprintf("[%s] [%s] %s", typ, tag, msg))
-		return
+func Info(tag string, msg string, args ...any) {
+	if defaultLogger == nil {
+		Init()
 	}
+	defaultLogger.Info(msg, append([]any{slog.String("tag", tag)}, args...)...)
+}
 
-	sb := strings.Builder{}
-	for _, key := range keys {
-		sb.WriteString(key.String() + ", ")
+func Warn(tag string, msg string, args ...any) {
+	if defaultLogger == nil {
+		Init()
 	}
-
-	addLog(LevelDebug, fmt.Sprintf("[%s] [%s] {%s} %s", typ, tag, sb.String(), msg))
+	defaultLogger.Warn(msg, append([]any{slog.String("tag", tag)}, args...)...)
 }
 
-func Info(tag string, msg string) {
-	addLog(LevelInfo, fmt.Sprintf("[%s] [%s] %s", "Info", tag, msg))
-}
-
-func Warn(tag string, msg string) {
-	addLog(LevelWarn, fmt.Sprintf("[%s] [%s] %s", "Warn", tag, msg))
-}
-
-func Error(tag string, msg string) {
-	addLog(LevelError, fmt.Sprintf("[%s] [%s] %s", "Error", tag, msg))
-}
-
-func Panic(tag string, msg string, keys ...fmt.Stringer) {
-	if len(keys) == 0 {
-		addLog(LevelDebug, fmt.Sprintf("[%s] [%s] %s", "Panic", tag, msg))
-		return
+func Error(tag string, msg string, args ...any) {
+	if defaultLogger == nil {
+		Init()
 	}
+	defaultLogger.Error(msg, append([]any{slog.String("tag", tag)}, args...)...)
+}
 
-	sb := strings.Builder{}
-	for _, key := range keys {
-		sb.WriteString(key.String() + ", ")
+func Panic(tag string, msg string, args ...any) {
+	if defaultLogger == nil {
+		Init()
 	}
-	addLog(LevelPanic, fmt.Sprintf("[%s] [%s] %s: %s", "Panic", tag, msg, sb.String()))
+	defaultLogger.Error(msg, append([]any{slog.String("tag", tag)}, args...)...)
+	os.Exit(1)
+}
+
+// Context aware logging
+func DebugContext(ctx context.Context, msg string, args ...any) {
+	if defaultLogger == nil {
+		Init()
+	}
+	defaultLogger.DebugContext(ctx, msg, args...)
+}
+
+func InfoContext(ctx context.Context, msg string, args ...any) {
+	if defaultLogger == nil {
+		Init()
+	}
+	defaultLogger.InfoContext(ctx, msg, args...)
+}
+
+func ErrorContext(ctx context.Context, msg string, args ...any) {
+	if defaultLogger == nil {
+		Init()
+	}
+	defaultLogger.ErrorContext(ctx, msg, args...)
 }

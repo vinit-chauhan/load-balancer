@@ -1,18 +1,29 @@
 services:
   - name: backend1
     endpoint: "/backend1"
+    algorithm: "round-robin"
+    health_check:
+      enabled: true
+      interval: "5s"
+      path: "/"
     urls:
       - http://backend1.1.local
       - http://backend1.2.local
       - http://backend1.3.local
   - name: backend2
     endpoint: "/backend2"
+    algorithm: "least-connections"
+    health_check:
+      enabled: true
+      interval: "10s"
+      path: "/health"
     urls:
       - http://backend2.1.local
       - http://backend2.2.local
       - http://backend2.3.local
   - name: backend3
     endpoint: "/backend3"
+    algorithm: "ip-hash"
     urls:
       - http://backend3.1.local
       - http://backend3.2.local
